@@ -33,10 +33,16 @@ app.layout = html.Div([
 	dbc.Container([
 		dbc.Row([
 			# COA logo
-			dbc.Col(html.Img(src='img/coa-seal.jpg'),width=3),
+			dbc.Col(html.Img(
+						id="COA-seal",
+						src=app.get_asset_url('coa-seal.jpg'),
+						style={
+							"height":"60px",
+							"width":"auto"
+						}),
+				width=1),
 			# A title
-			dbc.Col(html.H1("This is a title!"),width=6)
-			# Some right-justified stuff
+			dbc.Col(html.H1("COA COVID dashboard ALPHA"))
 			])
 		]),
 
@@ -46,8 +52,21 @@ app.layout = html.Div([
 	    [
 	        dbc.Row(
 	        	[
-	        		dbc.Col(dcc.Graph(figure=fig1),width=6),
-	        		dbc.Col(dcc.Graph(figure=fig2),width=6)
+	        		dbc.Col(
+	        			dcc.Graph(
+	        				id="timeseries-graph",
+	        				figure=fig1),
+	        			width=9),
+	        		dbc.Col(
+	        			html.Div(
+	        				id="case_number",
+	        				children=[
+	        					html.Div("Active cases"),
+	        					html.Div(str(df["active_cases"].iloc[-1]))
+	        				],
+	        				style={"backgroundColor":"brown"}
+	        				)
+	        			)
 	        	]
 	        ),
 	        html.Br(),
