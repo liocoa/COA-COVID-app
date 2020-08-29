@@ -22,19 +22,28 @@ fig2 = px.line(df,x="date",y="current_quar")
 fig3 = px.scatter(df,x="positive",y="quar_in")
 
 
-
+colors = {
+    'header_bg': 'darkgrey'
+}
 
 
 
 app.layout = html.Div([
 	# A header
-
+	dbc.Container([
+		dbc.Row([
+			# COA logo
+			dbc.Col(html.Img(src='img/coa-seal.jpg'),width=3),
+			# A title
+			dbc.Col(html.H1("This is a title!"),width=6)
+			# Some right-justified stuff
+			])
+		]),
 
 
 	# The main content
 	dbc.Container(
 	    [
-	    	dbc.Row(dbc.Col(html.H1("This is a title!"))),
 	        dbc.Row(
 	        	[
 	        		dbc.Col(dcc.Graph(figure=fig1),width=6),
