@@ -37,18 +37,40 @@ df["current_isol"] = current_isol
 # define figures
 def donut_isol(df):
     current_isol_val = df["current_isol"].iloc[-1]
-    isol_pie_labels = ["In isolation","unisolated"]
+    percent_isol = current_isol_val/POP*100
     isol_pie_values = [current_isol_val,POP-current_isol_val]
 
-    fig = go.Figure(data=[go.Pie(labels=isol_pie_labels, values=isol_pie_values, hole=0.6)])
+    fig = go.Figure(data=[go.Pie(values=isol_pie_values, hole=0.5)])
+    
+    # Title, suppress legend
+    fig.update_layout(title={"text":" Current Isolations","x":0.5,"xanchor":"center"}, showlegend=False)
+    # Trace labels and hover info
+    fig.update_traces(textinfo="none",hoverinfo='none')
+    # Center data
+    fig.add_annotation(text=f"{percent_isol:.1f}%", x=0.5, y=0.5, font_size=20, showarrow=False)
+    # Fine print
+    fine_print = "*percent of total campus program participants"
+    fig.add_annotation(text=fine_print, x=0.5, y=1.1, showarrow=False)
+    
     return fig
 
 def donut_quar(df):
     current_quar_val = df["current_quar"].iloc[-1]
-    quar_pie_labels = ["In quarantine","unquarantined"]
+    percent_quar = current_quar_val/POP*100
     quar_pie_values = [current_quar_val,POP-current_quar_val]
 
-    fig = go.Figure(data=[go.Pie(labels=quar_pie_labels, values=quar_pie_values, hole=0.6)])
+    fig = go.Figure(data=[go.Pie(values=quar_pie_values, hole=0.5)])
+    
+    # Title, suppress legend
+    fig.update_layout(title={"text":"Current Quarantines","x":0.5,"xanchor":"center"}, showlegend=False)
+    # Trace labels and hover info
+    fig.update_traces(textinfo="none",hoverinfo='none')
+    # Center data
+    fig.add_annotation(text=f"{percent_quar:.1f}%", x=0.5, y=0.5, font_size=20, showarrow=False)
+    # Fine print
+    fine_print = "*percent of on-campus housing residents"
+    fig.add_annotation(text=fine_print, x=0.5, y=1.1, showarrow=False)
+    
     return fig
 
 def make_table_df(df):
@@ -158,11 +180,10 @@ app.layout = html.Div([
 	        			html.Div(
 	        				id="case_number",
 	        				children=[
-	        					html.Div("Active cases",style={"height":"20%","textAlign":"center","verticalAlign":"middle"}),
-	        					html.Div(str(df["active_cases"].iloc[-1]),style={"textAlign":"center","verticalAlign":"middle"})
+	        					html.Div("Active cases",style={"textAlign":"center"}),
+	        					html.Div(str(df["active_cases"].iloc[-1]),style={"textAlign":"center"})
 	        				],
-	        				style={"backgroundColor":"brown",
-	        						"height":"100%"}
+	        				style={"backgroundColor":"brown"}
 	        				),
 	        			width=4
 	        			)
