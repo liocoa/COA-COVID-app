@@ -11,6 +11,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
+import dash_table
 
 
 #Campus population
@@ -42,10 +43,31 @@ def donut_isol(df):
     fig = go.Figure(data=[go.Pie(labels=isol_pie_labels, values=isol_pie_values, hole=0.6)])
     return fig
 
+def make_table_df(df):
+	labels = ["Total tested:", "Total negative:", "Positive rate:"]
+	current_vals = [df["tested"].iloc[-1],
+	                df["negative"].iloc[-1]]
+	previous_vals = [df["tested"].iloc[-2],
+	                 df["negative"].iloc[-2]]
+	since_vals = [df["tested"].sum(),
+	              df["negative"].sum()]
+
+	for vals in [current_vals,previous_vals,since_vals]:
+	    pos_rate = (vals[0]-vals[1])/vals[0]*100
+	    vals.append(f"{pos_rate:.1f}%")
+
+	data = pd.DataFrame({"":labels,"This week":current_vals,
+	                   "Last week":previous_vals,f"Since {df['date'].iloc[0]}":since_vals})
+	return data
+
+table_data = make_table_df(df)
+
 
 fig1 = px.line(df,x="date",y="active_cases")
 fig2 = px.line(df,x="date",y="current_quar")
 fig3 = px.scatter(df,x="positive",y="quar_in")
+
+
 
 
 colors = {
@@ -79,28 +101,41 @@ app.layout = html.Div([
 	        dbc.Row(
 	        	[
 	        		dbc.Col(
-	        			dcc.Graph(
-	        				id="timeseries-graph",
-	        				figure=fig1),
-	        			width=9),
+	        			html.Div(
+		        			dcc.Graph(
+		        				id="timeseries-graph",
+		        				figure=fig1
+		        				)
+		        			),
+	    			),
 	        		dbc.Col(
 	        			html.Div(
 	        				id="case_number",
 	        				children=[
-	        					html.Div("Active cases"),
-	        					html.Div(str(df["active_cases"].iloc[-1]))
+	        					html.Div("Active cases",style={"height":"20%","textAlign":"center","verticalAlign":"middle"}),
+	        					html.Div(str(df["active_cases"].iloc[-1]),style={"textAlign":"center","verticalAlign":"middle"})
 	        				],
-	        				style={"backgroundColor":"brown"}
-	        				)
+	        				style={"backgroundColor":"brown",
+	        						"height":"100%"}
+	        				),
+	        			width=4
 	        			)
 	        	]
 	        ),
 	        html.Br(),
-	        dbc.Row(
-	            [
-	                dbc.Col(dcc.Graph(figure=fig3))
-	            ]
-	        ),
+	        dbc.Row([
+                dbc.Col([
+                	html.Div([
+                		dash_table.DataTable(
+                			id="Table",
+                			columns=[{"name": i, "id": i} for i in table_data.columns],
+    						data=table_data.to_dict('records'),
+    						style_cell={"color":"black"},
+    						style_as_list_view=True
+                		)
+                	])
+                ])
+	         ]),
 	        html.Br(),
 	        dbc.Row(
 	        	[
