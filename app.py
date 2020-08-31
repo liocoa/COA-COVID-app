@@ -43,6 +43,14 @@ def donut_isol(df):
     fig = go.Figure(data=[go.Pie(labels=isol_pie_labels, values=isol_pie_values, hole=0.6)])
     return fig
 
+def donut_quar(df):
+    current_quar_val = df["current_quar"].iloc[-1]
+    quar_pie_labels = ["In quarantine","unquarantined"]
+    quar_pie_values = [current_quar_val,POP-current_quar_val]
+
+    fig = go.Figure(data=[go.Pie(labels=quar_pie_labels, values=quar_pie_values, hole=0.6)])
+    return fig
+
 def make_table_df(df):
 	labels = ["Total tested:", "Total negative:", "Positive rate:"]
 	current_vals = [df["tested"].iloc[-1],
@@ -186,7 +194,7 @@ app.layout = html.Div([
 	        dbc.Row(
 	        	[
 	        		dbc.Col(dcc.Graph(figure=donut_isol(df))),
-	        		dbc.Col(dcc.Graph(figure=donut_isol(df)))
+	        		dbc.Col(dcc.Graph(figure=donut_quar(df)))
 	        	]
 	        )
 	    ],
