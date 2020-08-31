@@ -109,7 +109,7 @@ def testing_rectangle(df):
 	fig.update_yaxes(range=[-0.1*test_side_length, 1.1*test_side_length], showgrid=False, zeroline=False, visible=False)
 
 	# Other layout
-	fig.update_layout(title="Proportion of total tests that were positive")
+	fig.update_layout(title={"text":"Proportion of total tests that were positive","x":0.5,"xanchor":"center"})
 
 	# A shape for tests
 	fig.add_shape(type="rect",
