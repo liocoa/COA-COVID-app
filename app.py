@@ -9,13 +9,39 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
+import numpy as np
 
 
+#Campus population
+POP = 350
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
 df = pd.read_csv('data/dummyData1.csv')
+
+
+# Perform calculations
+
+
+# Calculate current isolations
+current_isol = np.zeros(len(df)).astype(int)
+current_isol[0] = df["isol_in"][0]
+for i in range(len(df)-1):
+    current_isol[i+1] = current_isol[i] + df["isol_in"][i+1] - df["isol_out"][i+1]
+df["current_isol"] = current_isol
+
+
+# define figures
+def donut_isol(df):
+    current_isol_val = df["current_isol"].iloc[-1]
+    isol_pie_labels = ["In isolation","unisolated"]
+    isol_pie_values = [current_isol_val,POP-current_isol_val]
+
+    fig = go.Figure(data=[go.Pie(labels=isol_pie_labels, values=isol_pie_values, hole=0.6)])
+    return fig
+
 
 fig1 = px.line(df,x="date",y="active_cases")
 fig2 = px.line(df,x="date",y="current_quar")
@@ -42,7 +68,7 @@ app.layout = html.Div([
 						}),
 				width=1),
 			# A title
-			dbc.Col(html.H1("COA COVID dashboard ALPHA"))
+			dbc.Col(html.H1("COA COVID dashboard layout"))
 			])
 		]),
 
@@ -75,6 +101,13 @@ app.layout = html.Div([
 	                dbc.Col(dcc.Graph(figure=fig3))
 	            ]
 	        ),
+	        html.Br(),
+	        dbc.Row(
+	        	[
+	        		dbc.Col(dcc.Graph(figure=donut_isol(df))),
+	        		dbc.Col(dcc.Graph(figure=donut_isol(df)))
+	        	]
+	        )
 	    ],
 	)
 ])
