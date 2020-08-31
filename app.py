@@ -60,12 +60,50 @@ def make_table_df(df):
 	                   "Last week":previous_vals,f"Since {df['date'].iloc[0]}":since_vals})
 	return data
 
+def testing_rectangle(df):
+	# A graph for total + and - from campus testing
+
+	# Make a square whose area is equal to the number of tests conducted
+	total_tests = df["tested"].sum()
+	test_side_length = np.sqrt(total_tests)
+
+	# Make a square whose area is equal to the number of positive results
+	total_pos = df["positive"].sum()
+	pos_side_length = np.sqrt(total_pos)
+
+	# Make the graph
+	fig = go.Figure()
+
+	# Set axis properties (get rid of gridlines and axis scales)
+	fig.update_xaxes(range=[-0.1*test_side_length, 1.1*test_side_length], showgrid=False, zeroline=False, visible=False)
+	fig.update_yaxes(range=[-0.1*test_side_length, 1.1*test_side_length], showgrid=False, zeroline=False, visible=False)
+
+	# Other layout
+	fig.update_layout(title="Proportion of total tests that were positive")
+
+	# A shape for tests
+	fig.add_shape(type="rect",
+	             x0=0,
+	             y0=0,
+	             x1=test_side_length,
+	             y1=test_side_length,
+	             fillcolor="lightskyblue")
+
+	# A shape for positives
+	fig.add_shape(type="rect",
+	             x0=0,
+	             y0=0,
+	             x1=pos_side_length,
+	             y1=pos_side_length,
+	             fillcolor="firebrick")
+
+	return fig
+
+
+
 table_data = make_table_df(df)
-
-
-fig1 = px.line(df,x="date",y="active_cases")
-fig2 = px.line(df,x="date",y="current_quar")
-fig3 = px.scatter(df,x="positive",y="quar_in")
+cases_timeseries = px.line(df,x="date",y="active_cases")
+test_rect = testing_rectangle(df)
 
 
 
@@ -104,7 +142,7 @@ app.layout = html.Div([
 	        			html.Div(
 		        			dcc.Graph(
 		        				id="timeseries-graph",
-		        				figure=fig1
+		        				figure=cases_timeseries
 		        				)
 		        			),
 	    			),
@@ -124,6 +162,14 @@ app.layout = html.Div([
 	        ),
 	        html.Br(),
 	        dbc.Row([
+                dbc.Col([
+                	html.Div([
+                		dcc.Graph(id="test_rectangle",
+                			figure=test_rect)
+                		])
+                	]),
+
+
                 dbc.Col([
                 	html.Div([
                 		dash_table.DataTable(
