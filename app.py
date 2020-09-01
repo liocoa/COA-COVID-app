@@ -20,7 +20,7 @@ import plots
 POP = plots.POP
 
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.LUMEN])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
 
 df = pd.read_csv('data/dummyData2.csv')
 
@@ -56,73 +56,70 @@ app.layout = html.Div([
 						style={
 							"height":"100px",
 							"width":"auto"
-						}),
-			width=3
+						}
+					),
+				width=3
 			),
 			# A title
 			dbc.Col(html.H1("COA COVID dashboard layout"),width=9)
-			])
-		],
-		color="primary"
-		),
+		])
+	],
+	color="primary"
+	),
 
 	html.Br(),
 
 	# The main content
-	dbc.Container(
-	    [
-	        dbc.Row(
-	        	[
-	        		dbc.Col(
-	        			html.Div(
-		        			dcc.Graph(
-		        				id="timeseries-graph",
-		        				figure=cases_timeseries,
-		        				config=config
-		        				)
-		        			),
-	    			),
-	        		dbc.Col(
-	        			html.Div(
-	        				id="case_number",
-	        				children=[dbc.Jumbotron([
-	        					html.H3("Active cases",style={"textAlign":"center"}),
-	        					html.H1(str(df["active_cases"].iloc[-1]),style={"textAlign":"center"})
-	        				])
-	        				]
-	        				#style={"backgroundColor":"brown"}
-	        				),
-	        			width=4
-	        			)
-	        	]
-	        ),
-	        html.Br(),
-	        dbc.Row([
-                
+	dbc.Container([
+        dbc.Row([
+    		dbc.Col(
+    			html.Div(
+        			dcc.Graph(
+        				id="timeseries-graph",
+        				figure=cases_timeseries,
+        				config=config
+        			)
+        		),
+			),
+    		dbc.Col(
+    			html.Div(
+    				id="case_number",
+    				children=[
+    					dbc.Jumbotron([
+    						html.H3("Active cases",style={"textAlign":"center"}),
+    						html.H1(str(df["active_cases"].iloc[-1]),style={"textAlign":"center"})
+    					])
+    				]
+    				#style={"backgroundColor":"brown"}
+    			),
+    		width=4
+    		)
+        ]),
 
+        html.Br(),
 
-                dbc.Col([
-                	html.Div([
-                		dbc.Table.from_dataframe(table_data, striped=True, bordered=True, hover=False)
-                	])
-                ])
-	         ]),
-	        html.Br(),
-	        dbc.Row(
-	        	[
-	        		dbc.Col(dcc.Graph(figure=plots.donut_isol(df),config=config)),
-	        		dbc.Col([
-	                	html.Div([
-	                		dcc.Graph(id="test_rectangle",
-	                			figure=test_rect,
-	                			config=config)
-	                		])
-                	]),
-                	dbc.Col(dcc.Graph(figure=plots.donut_quar(df),config=config)),
-	        	]
-	        )
-	    ],
-	)
+        dbc.Row([
+            dbc.Col([
+            	html.Div([
+            		dbc.Table.from_dataframe(table_data, striped=True, bordered=True, hover=False)
+            	])
+            ])
+         ]),
+
+        html.Br(),
+
+        dbc.Row([
+    		dbc.Col(dcc.Graph(figure=plots.donut_isol(df),config=config)),
+    		dbc.Col([
+            	html.Div([
+            		dcc.Graph(id="test_rectangle",
+            			figure=test_rect,
+            			config=config)
+    			])
+        	]),
+        	dbc.Col(dcc.Graph(figure=plots.donut_quar(df),config=config))
+	    ])
+	])
 ])
 
 if __name__ == '__main__':
