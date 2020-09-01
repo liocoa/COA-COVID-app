@@ -32,7 +32,7 @@ df = plots.calculate(df)
 # Prep figures
 
 table_data = plots.make_table_df(df)
-cases_timeseries = px.line(df,x="date",y="active_cases")
+cases_timeseries = plots.timeseries(df)
 test_rect = plots.testing_rectangle(df)
 
 
@@ -40,6 +40,9 @@ colors = {
     'header_bg': 'darkgrey'
 }
 
+
+# pass to graph objects to make them static
+config = {'staticPlot': True}
 
 
 app.layout = html.Div([
@@ -59,7 +62,9 @@ app.layout = html.Div([
 			# A title
 			dbc.Col(html.H1("COA COVID dashboard layout"),width=9)
 			])
-		]),
+		],
+		color="primary"
+		),
 
 	html.Br(),
 
@@ -72,7 +77,8 @@ app.layout = html.Div([
 	        			html.Div(
 		        			dcc.Graph(
 		        				id="timeseries-graph",
-		        				figure=cases_timeseries
+		        				figure=cases_timeseries,
+		        				config=config
 		        				)
 		        			),
 	    			),
@@ -104,14 +110,15 @@ app.layout = html.Div([
 	        html.Br(),
 	        dbc.Row(
 	        	[
-	        		dbc.Col(dcc.Graph(figure=plots.donut_isol(df))),
+	        		dbc.Col(dcc.Graph(figure=plots.donut_isol(df),config=config)),
 	        		dbc.Col([
 	                	html.Div([
 	                		dcc.Graph(id="test_rectangle",
-	                			figure=test_rect)
+	                			figure=test_rect,
+	                			config=config)
 	                		])
                 	]),
-                	dbc.Col(dcc.Graph(figure=plots.donut_quar(df))),
+                	dbc.Col(dcc.Graph(figure=plots.donut_quar(df),config=config)),
 	        	]
 	        )
 	    ],

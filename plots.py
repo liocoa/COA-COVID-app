@@ -39,10 +39,13 @@ def calculate(df):
 
 	return df
 
+def timeseries(df):
+	fig = px.line(df,x="date",y="active_cases",range_y=(0,1/2*POP),title="Active cases over time")
+	fig.update_layout(title={"text":"Active cases over time","x":0.5,"xanchor":"center"}, showlegend=False)
+	return fig
 
 
 
-# define figures
 def donut_isol(df):
     current_isol_val = df["current_isol"].iloc[-1]
     percent_isol = current_isol_val/POP*100
