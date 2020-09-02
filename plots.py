@@ -48,6 +48,10 @@ def timeseries(df):
 	fig.update_layout(title={"text":"Active cases over time","x":0.5,"xanchor":"center"}, showlegend=False)
 	# Margins
 	fig.update_layout(height=300,margin=dict(l=30, r=30, t=40, b=10))
+	# Fonts
+	fig.update_layout(font_family="Trebuchet MS")
+	# Plot background
+	fig.update_layout(plot_bgcolor="#ecf0f1")
 	return fig
 
 
@@ -67,6 +71,8 @@ def make_donut(values,hole_number,title,fine_print):
 	fig.add_annotation(text=fine_print, x=0.5, y=1, showarrow=False)
 	# Margins
 	fig.update_layout(margin=donut_margins)
+	# Fonts
+	fig.update_layout(font_family="Trebuchet MS")
 
 	return fig
 
