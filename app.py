@@ -46,25 +46,27 @@ config = {'staticPlot': True}
 
 app.layout = html.Div([
 	# HEADER
-	dbc.Navbar([
-		dbc.Row([
-			# COA logo
-			dbc.Col(
-				html.Img(
-					id="COA-seal",
-					src=app.get_asset_url('coa_seal_transparency.png'),
-					style={
-						"height":"100px",
-						"width":"auto"
-					}
+	html.Header([
+		dbc.Container([
+			dbc.Row([
+				# COA logo
+				dbc.Col(
+					html.Img(
+						id="COA-seal",
+						src=app.get_asset_url('coa_seal_transparency.png'),
+						style={
+							"height":"75px",
+							"width":"auto"
+						}
+					),
+					width=1
 				),
-				width=3
-			),
-			# A title
-			dbc.Col(html.H1("COA COVID Tracker"),width=9)
+				# A title
+				dbc.Col(html.H1("COA COVID Tracker"))
+			])
 		])
 	],
-	color="grey"
+	style={"backgroundColor":"grey"}
 	),
 
 	html.Br(),
