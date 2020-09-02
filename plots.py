@@ -12,6 +12,7 @@ import numpy as np
 
 #Campus population
 POP = 480
+colors = {"COAblue":"#003399","COAgreen":"#669999","COVIDred":"#b20c28"}
 
 # Column names
 # Included in data entry
@@ -44,10 +45,12 @@ def calculate(df):
 	return df
 
 def timeseries(df):
-	fig = px.line(df,x=end,y=active,range_y=(0,1.25*df[active].max()),title="Active cases over time")
+	fig = px.line(df,x=end,y=active,range_y=(0,1.25*df[active].max()),title="Active cases over time",labels={end:""})
 	fig.update_layout(title={"text":"Active cases over time","x":0.5,"xanchor":"center"}, showlegend=False)
 	# Margins
-	fig.update_layout(height=300,margin=dict(l=30, r=30, t=40, b=10))
+	fig.update_layout(height=300,margin=dict(l=30, r=0, t=40, b=0))
+	# Line color
+	fig.update_traces(line = dict(color=colors["COVIDred"]))
 	# Fonts
 	fig.update_layout(font_family="Trebuchet MS")
 	# Plot background
@@ -59,12 +62,16 @@ def make_donut(values,hole_number,title,fine_print):
 
 	donut_margins = dict(l=30, r=30, t=40, b=10)
 
+
+
 	fig = go.Figure(data=[go.Pie(values=values, hole=0.5)])
 
 	# Title, suppress legend
 	fig.update_layout(title={"text":title,"x":0.5,"xanchor":"center"}, showlegend=False)
 	# Trace labels and hover info
 	fig.update_traces(textinfo="none",hoverinfo='none')
+	# Colors
+	fig.update_traces(marker=dict(colors=[colors["COAblue"],colors["COAgreen"]]))
 	# Center data
 	fig.add_annotation(text=f"{hole_number:.1f}%", x=0.5, y=0.5, font_size=20, showarrow=False)
 	# Fine print

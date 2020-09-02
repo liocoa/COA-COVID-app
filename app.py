@@ -66,7 +66,7 @@ app.layout = html.Div([
 			])
 		])
 	],
-	style={"backgroundColor":"grey"}
+	style={"backgroundColor":colors["COAgreen"]}
 	),
 
 	html.Br(),
@@ -114,13 +114,12 @@ app.layout = html.Div([
         html.Br(),
 
         dbc.Row([
-            
-
-            dbc.Col(dcc.Graph(figure=test_rect,config=config),width=4),
 
             dbc.Col(dcc.Graph(figure=p.donut_isol(df),config=config)),
 
-    		dbc.Col(dcc.Graph(figure=p.donut_quar(df),config=config))
+    		dbc.Col(dcc.Graph(figure=p.donut_quar(df),config=config)),
+
+    		dbc.Col(dcc.Graph(figure=test_rect,config=config))
 
          ])
 
