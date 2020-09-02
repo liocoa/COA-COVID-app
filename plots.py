@@ -44,13 +44,16 @@ def calculate(df):
 	return df
 
 def timeseries(df):
-	fig = px.line(df,x=end,y=active,range_y=(0,POP/3),title="Active cases over time")
+	fig = px.line(df,x=end,y=active,range_y=(0,1.25*df[active].max()),title="Active cases over time")
 	fig.update_layout(title={"text":"Active cases over time","x":0.5,"xanchor":"center"}, showlegend=False)
+	# Margins
+	fig.update_layout(height=300,margin=dict(l=30, r=30, t=40, b=10))
 	return fig
+
 
 def make_donut(values,hole_number,title,fine_print):
 
-	donut_margins = dict(l=30, r=20, t=40, b=10)
+	donut_margins = dict(l=30, r=30, t=40, b=10)
 
 	fig = go.Figure(data=[go.Pie(values=values, hole=0.5)])
 
@@ -73,7 +76,7 @@ def donut_isol(df):
 	isol_pie_values = [current_isol_val,POP-current_isol_val]
 
 	title = "Current Isolations"
-	fine_print = "*percent of total campus program participants"
+	fine_print = "*fine print"
 
 	fig = make_donut(isol_pie_values,percent_isol,title,fine_print)
 
@@ -85,7 +88,7 @@ def donut_quar(df):
 	quar_pie_values = [current_quar_val,POP-current_quar_val]
 
 	title = "Current Quarantines"
-	fine_print = "*percent of on-campus housing residents"
+	fine_print = "*fine print"
 
 	fig = make_donut(quar_pie_values,percent_quar,title,fine_print)    
 
@@ -98,7 +101,7 @@ def donut_total_tests(df):
 	pos_pie_values = [total_pos,total_tests-total_pos]
 
 	title = "Overall positive rate"
-	fine_print = "*total percent of on-campus tests returned positive"
+	fine_print = "*fine print"
 
 	fig = make_donut(pos_pie_values,percent_pos,title,fine_print)
 
