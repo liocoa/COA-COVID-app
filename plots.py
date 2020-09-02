@@ -15,6 +15,9 @@ POP = 350
 
 
 
+
+
+
 def calculate(df):
 	# Calcuate active cases
 	active_cases = np.zeros(len(df)).astype(int)
@@ -40,49 +43,73 @@ def calculate(df):
 	return df
 
 def timeseries(df):
-	fig = px.line(df,x="date",y="active_cases",range_y=(0,1/2*POP),title="Active cases over time")
+	fig = px.line(df,x="date",y="active_cases",range_y=(0,POP/3),title="Active cases over time")
 	fig.update_layout(title={"text":"Active cases over time","x":0.5,"xanchor":"center"}, showlegend=False)
 	return fig
 
 
+def make_donut(values,hole_number,title,fine_print):
+
+	donut_margins = dict(l=30, r=20, t=40, b=10)
+
+	fig = go.Figure(data=[go.Pie(values=values, hole=0.5)])
+
+	# Title, suppress legend
+	fig.update_layout(title={"text":title,"x":0.5,"xanchor":"center"}, showlegend=False)
+	# Trace labels and hover info
+	fig.update_traces(textinfo="none",hoverinfo='none')
+	# Center data
+	fig.add_annotation(text=f"{hole_number:.1f}%", x=0.5, y=0.5, font_size=20, showarrow=False)
+	# Fine print
+	fig.add_annotation(text=fine_print, x=0.5, y=1, showarrow=False)
+	# Margins
+	fig.update_layout(margin=donut_margins)
+
+	return fig
+
+
+
+
 
 def donut_isol(df):
-    current_isol_val = df["current_isol"].iloc[-1]
-    percent_isol = current_isol_val/POP*100
-    isol_pie_values = [current_isol_val,POP-current_isol_val]
+	current_isol_val = df["current_isol"].iloc[-1]
+	percent_isol = current_isol_val/POP*100
+	isol_pie_values = [current_isol_val,POP-current_isol_val]
 
-    fig = go.Figure(data=[go.Pie(values=isol_pie_values, hole=0.5)])
-    
-    # Title, suppress legend
-    fig.update_layout(title={"text":" Current Isolations","x":0.5,"xanchor":"center"}, showlegend=False)
-    # Trace labels and hover info
-    fig.update_traces(textinfo="none",hoverinfo='none')
-    # Center data
-    fig.add_annotation(text=f"{percent_isol:.1f}%", x=0.5, y=0.5, font_size=20, showarrow=False)
-    # Fine print
-    fine_print = "*percent of total campus program participants"
-    fig.add_annotation(text=fine_print, x=0.5, y=1.1, showarrow=False)
-    
-    return fig
+	title = "Current Isolations"
+	fine_print = "*percent of total campus program participants"
+
+	fig = make_donut(isol_pie_values,percent_isol,title,fine_print)
+
+	return fig
+
+
 
 def donut_quar(df):
-    current_quar_val = df["current_quar"].iloc[-1]
-    percent_quar = current_quar_val/POP*100
-    quar_pie_values = [current_quar_val,POP-current_quar_val]
+	current_quar_val = df["current_quar"].iloc[-1]
+	percent_quar = current_quar_val/POP*100
+	quar_pie_values = [current_quar_val,POP-current_quar_val]
 
-    fig = go.Figure(data=[go.Pie(values=quar_pie_values, hole=0.5)])
-    
-    # Title, suppress legend
-    fig.update_layout(title={"text":"Current Quarantines","x":0.5,"xanchor":"center"}, showlegend=False)
-    # Trace labels and hover info
-    fig.update_traces(textinfo="none",hoverinfo='none')
-    # Center data
-    fig.add_annotation(text=f"{percent_quar:.1f}%", x=0.5, y=0.5, font_size=20, showarrow=False)
-    # Fine print
-    fine_print = "*percent of on-campus housing residents"
-    fig.add_annotation(text=fine_print, x=0.5, y=1.1, showarrow=False)
-    
-    return fig
+	title = "Current Quarantines"
+	fine_print = "*percent of on-campus housing residents"
+
+	fig = make_donut(quar_pie_values,percent_quar,title,fine_print)    
+
+	return fig
+
+def donut_total_tests(df):
+	total_tests = df["tested"].sum()
+	total_pos = df["positive"].sum()
+	percent_pos = total_pos/total_tests*100
+	pos_pie_values = [total_pos,total_tests-total_pos]
+
+	title = "Overall positive rate"
+	fine_print = "*total percent of on-campus tests returned positive"
+
+	fig = make_donut(pos_pie_values,percent_pos,title,fine_print)
+
+	return fig
+
 
 def make_table_df(df):
 	labels = ["Total tested:", "Total negative:", "Positive rate:"]

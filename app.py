@@ -33,7 +33,7 @@ df = plots.calculate(df)
 
 table_data = plots.make_table_df(df)
 cases_timeseries = plots.timeseries(df)
-test_rect = plots.testing_rectangle(df)
+test_rect = plots.donut_total_tests(df)
 
 
 colors = {
@@ -46,7 +46,7 @@ config = {'staticPlot': True}
 
 
 app.layout = html.Div([
-	# A header
+	# HEADER
 	dbc.Navbar([
 		dbc.Row([
 			# COA logo
@@ -69,18 +69,9 @@ app.layout = html.Div([
 
 	html.Br(),
 
-	# The main content
+	# The main layout
 	dbc.Container([
         dbc.Row([
-    		dbc.Col(
-    			html.Div(
-        			dcc.Graph(
-        				id="timeseries-graph",
-        				figure=cases_timeseries,
-        				config=config
-        			)
-        		),
-			),
     		dbc.Col(
     			html.Div(
     				id="case_number",
@@ -93,32 +84,49 @@ app.layout = html.Div([
     				#style={"backgroundColor":"brown"}
     			),
     		width=4
-    		)
+    		),
+
+    		dbc.Col(dcc.Graph(figure=plots.donut_isol(df),config=config)),
+
+    		dbc.Col(dcc.Graph(figure=plots.donut_quar(df),config=config)),
+
+    		
+
         ]),
 
-        html.Br(),
+		html.Br(),
 
         dbc.Row([
-            dbc.Col([
+    		
+    		dbc.Col([
             	html.Div([
             		dbc.Table.from_dataframe(table_data, striped=True, bordered=True, hover=False)
             	])
             ])
-         ]),
+        	
+	    ]),
+
 
         html.Br(),
 
         dbc.Row([
-    		dbc.Col(dcc.Graph(figure=plots.donut_isol(df),config=config)),
-    		dbc.Col([
-            	html.Div([
-            		dcc.Graph(id="test_rectangle",
-            			figure=test_rect,
-            			config=config)
-    			])
-        	]),
-        	dbc.Col(dcc.Graph(figure=plots.donut_quar(df),config=config))
-	    ])
+            
+
+            dbc.Col(dcc.Graph(figure=test_rect,config=config),width=4),
+
+            dbc.Col(
+    			html.Div(
+        			dcc.Graph(
+        				id="timeseries-graph",
+        				figure=cases_timeseries,
+        				config=config
+        			)
+        		),
+			)
+
+         ])
+
+        
 	])
 ])
 
