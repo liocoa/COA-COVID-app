@@ -76,7 +76,7 @@ section {
 }
 body {
     margin: 0;
-    font-family: expo-sans-pro,'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;
+    font-family: 'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;
     font-size: 0.9375rem;
     font-weight: 400;
     line-height: 1.5;
@@ -163,7 +163,7 @@ sup {
     top: -0.5em;
 }
 a {
-    color: #18bc9c;
+    color: #003399;
     text-decoration: none;
     background-color: transparent;
 }
@@ -1809,6 +1809,7 @@ pre code {
     width: 100%;
     margin-bottom: 1rem;
     color: #212529;
+    font-size: 130%
 }
 .table th,
 .table td {

@@ -70,7 +70,7 @@ app.layout = html.Div([
 					width=1
 				),
 				# A title
-				dbc.Col(html.H1("COA COVID-19 Tracker",style={"verticalAlign":"bottom"}))
+				dbc.Col(html.H1("COA COVID-19 Dashboard",style={"verticalAlign":"bottom"}))
 			]),
 
 			html.Br()
@@ -181,10 +181,10 @@ app.layout = html.Div([
 			dbc.Row([
 				dbc.Col(
 					html.Div([
-						html.P("Active cases: The number of active cases is the number of COA community members who have COVID-19."),
-						html.P("Isolations: The isolation rate is the percent of COA community members in isolation (at the COA isolation facility, in the hospital, or isolated at home) as of the end date of this reporting period. Anyone who tests positive for COVID will be isolated until they receive a negative test result."),
-						html.P("Quarantines: The quarantine rate is the percent of COA community members in quarantine (either on or off campus) as of the end date of this reporting period. Anyone who shows symptoms or has had contact with a person who has tested positive for COVID will be required to quarantine themselves until they receive a negative test result."),
-						html.P("Overall positive rate: The overall positive rate is the percent of all tests done on COA community members (to our knowledge) that have returned positive results."),
+						html.P("Active cases: the number of COA community members participating in the campus program who have COVID-19"),
+						html.P("Isolations: anyone testing positive for COVID-19 will be placed in isolation until they receive a negative test result or are cleared by the COA COVID health team"),
+						html.P("Quarantines: anyone who shows symptoms or has been in close contact with someone who tests positive for COVID-19 will be asked to quarantine at home until cleared by the COA COVID health team"),
+						html.P("Overall positive rate: the percentage of all tests done on COA community members that have returned positive results"),
 						html.P(["State data: State and county case numbers are calculated from the Cases by County Table on ",html.A("maine.gov",href='https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml')," by taking number of cases minus deaths and recoveries."]),
 						html.P(["COA data: Download our data ",html.A("AT THIS TEST LINK DO NOT PUBLISH ME",href='https://tinyurl.com/y2z3ox8p'),"."])
 					])

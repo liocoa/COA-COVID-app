@@ -17,7 +17,11 @@ import dash_table
 
 #Campus population
 POP = 480
-colors = {"COAblue":"#003399","COAgreen":"#669999","COVIDred":"#b20c28"}
+colors = {"COAblue":"#003399",
+			"COAgreen":"#669999",
+			"COVIDred":"#b20c28",
+			"COAyellow":"#9e711c",
+			"COAbrown": "#824b15"}
 
 # Column names
 # Included in data entry
@@ -62,7 +66,7 @@ def timeseries(df):
 	# Margins
 	fig.update_layout(height=300,margin=dict(l=30, r=30, t=40, b=0))
 	# Line color
-	fig.update_traces(line = dict(color=colors["COVIDred"]))
+	fig.update_traces(line = dict(color=colors["COAblue"]))
 	# Fonts
 	fig.update_layout(font_family="Trebuchet MS")
 	# Plot background
@@ -101,7 +105,7 @@ def donut_isol(df):
 	isol_pie_values = [current_isol_val,POP-current_isol_val]
 
 	title = "Current Isolations"
-	fine_print = "*fine print"
+	fine_print = "*percent of COA community currently in isolation"
 
 	fig = make_donut(isol_pie_values,percent_isol,title,fine_print)
 
@@ -113,7 +117,7 @@ def donut_quar(df):
 	quar_pie_values = [current_quar_val,POP-current_quar_val]
 
 	title = "Current Quarantines"
-	fine_print = "*fine print"
+	fine_print = "*percent of COA community currently in quarantine"
 
 	fig = make_donut(quar_pie_values,percent_quar,title,fine_print)    
 
@@ -126,7 +130,7 @@ def donut_total_tests(df):
 	pos_pie_values = [total_pos,total_tests-total_pos]
 
 	title = "Overall positive rate"
-	fine_print = "*fine print"
+	fine_print = "*percent of all COA community tests returned positive"
 
 	fig = make_donut(pos_pie_values,percent_pos,title,fine_print)
 
