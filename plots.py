@@ -68,7 +68,7 @@ def timeseries(df):
 	# Line color
 	fig.update_traces(line = dict(color=colors["COAblue"]))
 	# Fonts
-	fig.update_layout(font_family="Trebuchet MS")
+	fig.update_layout(font_family="Trebuchet MS",font_size=18)
 	# Plot background
 	fig.update_layout(plot_bgcolor="#ecf0f1")
 	return fig
@@ -89,13 +89,13 @@ def make_donut(values,hole_number,title,fine_print):
 	# Colors
 	fig.update_traces(marker=dict(colors=[colors["COAblue"],colors["COAgreen"]]))
 	# Center data
-	fig.add_annotation(text=f"{hole_number:.1f}%", x=0.5, y=0.5, font_size=20, showarrow=False)
+	fig.add_annotation(text=f"{hole_number:.1f}%", x=0.5, y=0.5, font_size=30, showarrow=False)
 	# Fine print
 	fig.add_annotation(text=fine_print, x=0.5, y=1, showarrow=False)
 	# Margins
 	fig.update_layout(margin=donut_margins)
 	# Fonts
-	fig.update_layout(font_family="Trebuchet MS")
+	fig.update_layout(font_family="Trebuchet MS",font_size=18)
 
 	return fig
 
@@ -105,7 +105,7 @@ def donut_isol(df):
 	isol_pie_values = [current_isol_val,POP-current_isol_val]
 
 	title = "Current Isolations"
-	fine_print = "*percent of COA community currently in isolation"
+	fine_print = "% in isolation"
 
 	fig = make_donut(isol_pie_values,percent_isol,title,fine_print)
 
@@ -117,7 +117,7 @@ def donut_quar(df):
 	quar_pie_values = [current_quar_val,POP-current_quar_val]
 
 	title = "Current Quarantines"
-	fine_print = "*percent of COA community currently in quarantine"
+	fine_print = "% in quarantine"
 
 	fig = make_donut(quar_pie_values,percent_quar,title,fine_print)    
 
@@ -130,7 +130,7 @@ def donut_total_tests(df):
 	pos_pie_values = [total_pos,total_tests-total_pos]
 
 	title = "Overall positive rate"
-	fine_print = "*percent of all COA community tests returned positive"
+	fine_print = "% tests returned positive"
 
 	fig = make_donut(pos_pie_values,percent_pos,title,fine_print)
 
