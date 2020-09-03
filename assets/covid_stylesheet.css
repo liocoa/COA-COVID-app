@@ -65,7 +65,9 @@ aside,
 figcaption,
 figure,
 footer,
-header,
+header {
+    font-family:'Georgia',serif
+}
 hgroup,
 main,
 nav,

@@ -3,10 +3,15 @@
 # Importable module for making the plots.
 # I just prefer to have these in a separate place to avoid clutter.
 
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
+import dash_table
 
 
 
@@ -44,11 +49,18 @@ def calculate(df):
 
 	return df
 
+def maine_current(df):
+	# Calculate current cases for Maine and Hancock
+	df["CURRENT"] = df["CASES"] - df["DEATHS"] - df["RECOVERIES"]
+
+	return df
+
+
 def timeseries(df):
 	fig = px.line(df,x=end,y=active,range_y=(0,1.25*df[active].max()),title="Active cases over time",labels={end:""})
 	fig.update_layout(title={"text":"Active cases over time","x":0.5,"xanchor":"center"}, showlegend=False)
 	# Margins
-	fig.update_layout(height=300,margin=dict(l=30, r=0, t=40, b=0))
+	fig.update_layout(height=300,margin=dict(l=30, r=30, t=40, b=0))
 	# Line color
 	fig.update_traces(line = dict(color=colors["COVIDred"]))
 	# Fonts
@@ -121,58 +133,35 @@ def donut_total_tests(df):
 	return fig
 
 def make_table_df(df):
-	labels = ["Total tested:", "Total negative:", "Positive rate:"]
+	labels = ["Tests conducted:", "Positive results:", "Positivity rate:"]
 	current_vals = [df[tested].iloc[-1],
-	                df[negative].iloc[-1]]
+	                df[positive].iloc[-1]]
 	previous_vals = [df[tested].iloc[-2],
-	                 df[negative].iloc[-2]]
+	                 df[positive].iloc[-2]]
 	since_vals = [df[tested].sum(),
-	              df[negative].sum()]
+	              df[positive].sum()]
 
 	for vals in [current_vals,previous_vals,since_vals]:
-	    pos_rate = (vals[0]-vals[1])/vals[0]*100
+	    pos_rate = (vals[1])/vals[0]*100
 	    vals.append(f"{pos_rate:.1f}%")
 
 	data = pd.DataFrame({"":labels,"This week":current_vals,
 	                   "Last week":previous_vals,f"Since {df[end].iloc[0]}":since_vals})
+
+
 	return data
 
+def reporting_table(df):
+	daterange = lambda index : f"{df[start].iloc[index]} to {df[end].iloc[index]}"
+	
 
-#def testing_rectangle(df):
-	# # A graph for total + and - from campus testing
+	time_labels = [f"Current reporting period ({daterange(-1)})",f"Previous reporting period ({daterange(-2)})",f"Total since {df[start].iloc[0]}"]
+	totals = [df[tested].iloc[-1],df[tested].iloc[-2],df[tested].sum()]
+	positives = [df[positive].iloc[-1],df[positive].iloc[-2],df[positive].sum()]
+	
+	posrate = lambda idx : f"{positives[idx]/totals[idx]*100:.1f}%"
+	pos_rates = [posrate(0),posrate(1),posrate(2)]
 
-	# # Make a square whose area is equal to the number of tests conducted
-	# total_tests = df[tested].sum()
-	# test_side_length = np.sqrt(total_tests)
+	data = pd.DataFrame({"":time_labels,"Tests conducted":totals,"Positive results":positives,"Positive rate":pos_rates})
 
-	# # Make a square whose area is equal to the number of positive results
-	# total_pos = df[positive].sum()
-	# pos_side_length = np.sqrt(total_pos)
-
-	# # Make the graph
-	# fig = go.Figure()
-
-	# # Set axis properties (get rid of gridlines and axis scales)
-	# fig.update_xaxes(range=[-0.1*test_side_length, 1.1*test_side_length], showgrid=False, zeroline=False, visible=False)
-	# fig.update_yaxes(range=[-0.1*test_side_length, 1.1*test_side_length], showgrid=False, zeroline=False, visible=False)
-
-	# # Other layout
-	# fig.update_layout(title={"text":"Proportion of total tests that were positive","x":0.5,"xanchor":"center"})
-
-	# # A shape for tests
-	# fig.add_shape(type="rect",
-	#              x0=0,
-	#              y0=0,
-	#              x1=test_side_length,
-	#              y1=test_side_length,
-	#              fillcolor="lightskyblue")
-
-	# # A shape for positives
-	# fig.add_shape(type="rect",
-	#              x0=0,
-	#              y0=0,
-	#              x1=pos_side_length,
-	#              y1=pos_side_length,
-	#              fillcolor="firebrick")
-
-	# return fig
+	return data
