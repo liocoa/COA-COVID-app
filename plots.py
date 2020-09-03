@@ -37,6 +37,10 @@ quar = "Number in quarantine"
 negative = "Negative results"
 active = "Active cases"
 
+maine_pop = 1344212
+hancock_pop = 54811
+
+
 
 def calculate(df):
 	# Calculate negative cases
@@ -53,11 +57,13 @@ def calculate(df):
 
 	return df
 
-def maine_current(df):
-	# Calculate current cases for Maine and Hancock
-	df["CURRENT"] = df["CASES"] - df["DEATHS"] - df["RECOVERIES"]
-
-	return df
+def maine_relevant_data(df):
+	totals = {"PATIENT_COUNTY":"Total","CASES":df["CASES"].sum(),"RECOVERIES":df["RECOVERIES"].sum()}
+	hancock = df[df["PATIENT_COUNTY"]=="Hancock"]
+	df1 = hancock.append(totals,ignore_index=True)
+	df1["POP"] = [hancock_pop,maine_pop]
+	df1["PERCAP"] = df1["CASES"]/df1["POP"]*10000
+	return df1
 
 
 def timeseries(df):
@@ -76,7 +82,7 @@ def timeseries(df):
 
 def make_donut(values,hole_number,title,fine_print):
 
-	donut_margins = dict(l=30, r=30, t=40, b=10)
+	donut_margins = dict(l=30, r=30, t=40, b=0)
 
 
 
@@ -89,7 +95,7 @@ def make_donut(values,hole_number,title,fine_print):
 	# Colors
 	fig.update_traces(marker=dict(colors=[colors["COAblue"],colors["COAgreen"]]))
 	# Center data
-	fig.add_annotation(text=f"{hole_number:.1f}%", x=0.5, y=0.5, font_size=30, showarrow=False)
+	fig.add_annotation(text=hole_number, x=0.5, y=0.5, font_size=30, showarrow=False)
 	# Fine print
 	fig.add_annotation(text=fine_print, x=0.5, y=1, showarrow=False)
 	# Margins
@@ -105,9 +111,9 @@ def donut_isol(df):
 	isol_pie_values = [current_isol_val,POP-current_isol_val]
 
 	title = "Current Isolations"
-	fine_print = "% in isolation"
+	fine_print = "# in isolation"
 
-	fig = make_donut(isol_pie_values,percent_isol,title,fine_print)
+	fig = make_donut(isol_pie_values,str(current_isol_val),title,fine_print)
 
 	return fig
 
@@ -117,9 +123,10 @@ def donut_quar(df):
 	quar_pie_values = [current_quar_val,POP-current_quar_val]
 
 	title = "Current Quarantines"
-	fine_print = "% in quarantine"
+	fine_print = "# in quarantine"
 
-	fig = make_donut(quar_pie_values,percent_quar,title,fine_print)    
+
+	fig = make_donut(quar_pie_values,str(current_quar_val),title,fine_print)    
 
 	return fig
 
@@ -131,8 +138,9 @@ def donut_total_tests(df):
 
 	title = "Overall positive rate"
 	fine_print = "% tests returned positive"
+	center_text = f"{percent_pos:.1f}%"
 
-	fig = make_donut(pos_pie_values,percent_pos,title,fine_print)
+	fig = make_donut(pos_pie_values,center_text,title,fine_print)
 
 	return fig
 

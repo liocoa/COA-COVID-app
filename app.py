@@ -31,7 +31,8 @@ df_maine = pd.read_csv('https://tinyurl.com/y45pf56k')
 
 df = p.calculate(df)
 
-df_maine = p.maine_current(df_maine)
+df_maine = p.maine_relevant_data(df_maine)
+
 
 # Prep figures
 
@@ -70,7 +71,7 @@ app.layout = html.Div([
 					width=1
 				),
 				# A title
-				dbc.Col(html.H1("COA COVID-19 Dashboard",style={"verticalAlign":"bottom"}))
+				dbc.Col(html.H1("COA COVID-19 Dashboard"))
 			]),
 
 			html.Br()
@@ -117,7 +118,7 @@ app.layout = html.Div([
 			dbc.Col(
     			html.Div(
 					dbc.Jumbotron([
-						html.H3("Active cases",style={"textAlign":"center"}),
+						html.H2("Active cases",style={"textAlign":"center"}),
 						html.H1(str(df[p.active].iloc[-1]),style={"textAlign":"center"})
 					]),
     			),
@@ -142,7 +143,7 @@ app.layout = html.Div([
 
         ]),
 
-        html.Br(),
+
 
         # Fourth row
 
@@ -150,16 +151,21 @@ app.layout = html.Div([
         	dbc.Col(
     			html.Div(
 					dbc.Jumbotron([
-						html.H3("Current Hancock county cases",style={"textAlign":"center"}),
-						html.H1(df_maine[df_maine["PATIENT_COUNTY"]=="Hancock"]["CURRENT"],style={"textAlign":"center"})
+						html.H2("Hancock County",style={"textAlign":"center"}),
+						html.Div([f"Total cases: {df_maine.loc[0,'CASES']}"],style={"textAlign":"center","fontSize":"150%"}),
+						html.Div([f"Total recovered: {df_maine.loc[0,'RECOVERIES']}"],style={"textAlign":"center","fontSize":"150%"}),
+						html.Div([f"Cases per 10k people: {df_maine.loc[0,'PERCAP']:.1f}"],style={"textAlign":"center","fontSize":"150%"})
+
 					]),
     			),
     		),
     		dbc.Col(
     			html.Div(
 					dbc.Jumbotron([
-						html.H3("Current Maine state cases",style={"textAlign":"center"}),
-						html.H1(df_maine["CURRENT"].sum(),style={"textAlign":"center"})
+						html.H2("State of Maine",style={"textAlign":"center"}),
+						html.Div([f"Total cases: {df_maine.loc[1,'CASES']}"],style={"textAlign":"center","fontSize":"150%"}),
+						html.Div([f"Total recovered: {df_maine.loc[1,'RECOVERIES']}"],style={"textAlign":"center","fontSize":"150%"}),
+						html.Div([f"Cases per 10k people: {df_maine.loc[1,'PERCAP']:.1f}"],style={"textAlign":"center","fontSize":"150%"})
 					]),
     			),
     		)
@@ -185,8 +191,8 @@ app.layout = html.Div([
 						html.P("Isolations: anyone testing positive for COVID-19 will be placed in isolation until they receive a negative test result or are cleared by the COA COVID health team"),
 						html.P("Quarantines: anyone who shows symptoms or has been in close contact with someone who tests positive for COVID-19 will be asked to quarantine at home until cleared by the COA COVID health team"),
 						html.P("Overall positive rate: the percentage of all tests done on COA community members that have returned positive results"),
-						html.P(["State data: State and county case numbers are calculated from the Cases by County Table on ",html.A("maine.gov",href='https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml')," by taking number of cases minus deaths and recoveries."]),
-						html.P(["COA data: Download our data ",html.A("AT THIS TEST LINK DO NOT PUBLISH ME",href='https://tinyurl.com/y2z3ox8p'),"."])
+						html.P(["State and county data: from the Cases by County Table on ",html.A("maine.gov",href='https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml')]),
+						html.P(["COA data: download at ",html.A("TEST LINK DO NOT PUBLISH ME",href='https://tinyurl.com/y2z3ox8p'),])
 					])
 				)
 			]),
