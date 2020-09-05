@@ -95,7 +95,7 @@ def make_donut(values,hole_number,title,fine_print):
 	# Colors
 	fig.update_traces(marker=dict(colors=[colors["COAblue"],colors["COAgreen"]]))
 	# Center data
-	fig.add_annotation(text=hole_number, x=0.5, y=0.5, font_size=30, showarrow=False)
+	fig.add_annotation(text=f"{hole_number:.1f}%", x=0.5, y=0.5, font_size=30, showarrow=False)
 	# Fine print
 	fig.add_annotation(text=fine_print, x=0.5, y=1, showarrow=False)
 	# Margins
@@ -111,9 +111,9 @@ def donut_isol(df):
 	isol_pie_values = [current_isol_val,POP-current_isol_val]
 
 	title = "Current Isolations"
-	fine_print = "# in isolation"
+	fine_print = str(current_isol_val)
 
-	fig = make_donut(isol_pie_values,str(current_isol_val),title,fine_print)
+	fig = make_donut(isol_pie_values,percent_isol,title,fine_print)
 
 	return fig
 
@@ -123,10 +123,10 @@ def donut_quar(df):
 	quar_pie_values = [current_quar_val,POP-current_quar_val]
 
 	title = "Current Quarantines"
-	fine_print = "# in quarantine"
+	fine_print = str(current_quar_val)
 
 
-	fig = make_donut(quar_pie_values,str(current_quar_val),title,fine_print)    
+	fig = make_donut(quar_pie_values,percent_quar,title,fine_print)    
 
 	return fig
 
@@ -138,9 +138,8 @@ def donut_total_tests(df):
 
 	title = "Overall positive rate"
 	fine_print = "% tests returned positive"
-	center_text = f"{percent_pos:.1f}%"
 
-	fig = make_donut(pos_pie_values,center_text,title,fine_print)
+	fig = make_donut(pos_pie_values,percent_pos,title,fine_print)
 
 	return fig
 
