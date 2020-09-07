@@ -58,7 +58,8 @@ def calculate(df):
 								isol:0,
 								quar:0,
 								negative:0,
-								active:0},
+								active:0,
+								exp:None},
 								index=[0])
 		print(new_df)
 		return new_df
@@ -149,19 +150,6 @@ def donut_quar(df):
 	fig = make_donut(quar_pie_values,percent_quar,title,fine_print)    
 
 	return fig
-
-# def donut_total_tests(df):
-# 	total_tests = df[tested].sum()
-# 	total_pos = df[positive].sum()
-# 	percent_pos = total_pos/total_tests*100
-# 	pos_pie_values = [total_pos,total_tests-total_pos]
-
-# 	title = "Overall positive rate"
-# 	fine_print = "% tests returned positive"
-
-# 	fig = make_donut(pos_pie_values,percent_pos,title,fine_print)
-
-# 	return fig
 
 
 def reporting_table(df):
