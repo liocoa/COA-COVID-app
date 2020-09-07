@@ -53,7 +53,13 @@ table_data = p.reporting_table(df)
 cases_timeseries = p.timeseries(df)
 #test_rect = p.donut_total_tests(df)
 
+# Get colors from plots file
 colors = p.colors
+
+# Get the most recent update timestamp
+updated = df["Timestamp"].iloc[-1]
+updated = updated.split(" ")[0]
+
 
 
 
@@ -96,10 +102,18 @@ app.layout = html.Div([
 
 	# End header
 
-	html.Br(),
-
 	# The main layout
 	dbc.Container([
+
+		# Updated note
+
+		dbc.Row([
+			dbc.Col([
+				html.Div([f"Updated on {updated}"],style={"textAlign":"center"})
+			])
+		]),
+
+		html.Br(),
 		
 		# First row
 
@@ -216,8 +230,8 @@ app.layout = html.Div([
 				dbc.Col(
 					html.Div([
 						html.P("Active cases: the number of COA community members participating in the campus program who have COVID-19"),
-						html.P("Isolation: anyone testing positive for COVID-19 will be required to isolate until they are cleared by the COA COVID health team"),
-						html.P("Quarantine: anyone who has been in close contact with someone who tests positive for COVID-19 will be required to quarantine until cleared by the COA COVID health team"),
+						html.P("Isolation: anyone testing positive for COVID-19 will be required to isolate until they are cleared by the COA COVID-19 health team"),
+						html.P("Quarantine: anyone who has been in close contact with someone who tests positive for COVID-19 will be required to quarantine until cleared by the COA COVID-19 health team"),
 						# html.P("Overall positive rate: the percentage of all tests done on COA community members that have returned positive results"),
 						html.P(["State and county data: from the Cases by County Table on ",html.A("maine.gov",href='https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml')]),
 						html.P(["COA data: ",html.A("download here",href=COA_data_url),])
