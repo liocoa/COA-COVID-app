@@ -37,7 +37,7 @@ df_maine = p.maine_relevant_data(df_maine)
 
 table_data = p.reporting_table(df)
 cases_timeseries = p.timeseries(df)
-test_rect = p.donut_total_tests(df)
+#test_rect = p.donut_total_tests(df)
 
 colors = p.colors
 
@@ -138,7 +138,16 @@ app.layout = html.Div([
 
     		dbc.Col(dcc.Graph(figure=p.donut_quar(df),config=config),width=4),
 
-    		dbc.Col(dcc.Graph(figure=test_rect,config=config),width=4)
+    		dbc.Col(
+    			html.Div(
+					dbc.Jumbotron([
+						html.H2("Recovered cases",style={"textAlign":"center"}),
+						html.H1(str(df[p.recovered].iloc[-1]),style={"textAlign":"center"})
+					]),
+    			),
+    		width=4
+    		)
+
 
         ]),
 
@@ -187,9 +196,9 @@ app.layout = html.Div([
 				dbc.Col(
 					html.Div([
 						html.P("Active cases: the number of COA community members participating in the campus program who have COVID-19"),
-						html.P("Isolation: anyone testing positive for COVID-19 will be placed in isolation until they receive a negative test result or are cleared by the COA COVID health team"),
-						html.P("Quarantine: anyone who shows symptoms or has been in close contact with someone who tests positive for COVID-19 will be asked to quarantine at home until cleared by the COA COVID health team"),
-						html.P("Overall positive rate: the percentage of all tests done on COA community members that have returned positive results"),
+						html.P("Isolation: anyone testing positive for COVID-19 will be required to isolate until they are cleared by the COA COVID health team"),
+						html.P("Quarantine: anyone who has been in close contact with someone who tests positive for COVID-19 will be required to quarantine until cleared by the COA COVID health team"),
+						# html.P("Overall positive rate: the percentage of all tests done on COA community members that have returned positive results"),
 						html.P(["State and county data: from the Cases by County Table on ",html.A("maine.gov",href='https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml')]),
 						html.P(["COA data: download at ",html.A("TEST LINK DO NOT PUBLISH ME",href='https://tinyurl.com/y2z3ox8p'),])
 					])

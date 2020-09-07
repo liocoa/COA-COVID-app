@@ -129,7 +129,7 @@ def donut_isol(df):
 	percent_isol = current_isol_val/POP*100
 	isol_pie_values = [current_isol_val,POP-current_isol_val]
 
-	title = "Current Isolations"
+	title = "Current Isolation"
 	fine_print = str(current_isol_val)
 
 	fig = make_donut(isol_pie_values,percent_isol,title,fine_print)
@@ -141,7 +141,7 @@ def donut_quar(df):
 	percent_quar = current_quar_val/POP*100
 	quar_pie_values = [current_quar_val,POP-current_quar_val]
 
-	title = "Current Quarantines"
+	title = "Current Quarantine"
 	fine_print = str(current_quar_val)
 
 
@@ -149,18 +149,18 @@ def donut_quar(df):
 
 	return fig
 
-def donut_total_tests(df):
-	total_tests = df[tested].sum()
-	total_pos = df[positive].sum()
-	percent_pos = total_pos/total_tests*100
-	pos_pie_values = [total_pos,total_tests-total_pos]
+# def donut_total_tests(df):
+# 	total_tests = df[tested].sum()
+# 	total_pos = df[positive].sum()
+# 	percent_pos = total_pos/total_tests*100
+# 	pos_pie_values = [total_pos,total_tests-total_pos]
 
-	title = "Overall positive rate"
-	fine_print = "% tests returned positive"
+# 	title = "Overall positive rate"
+# 	fine_print = "% tests returned positive"
 
-	fig = make_donut(pos_pie_values,percent_pos,title,fine_print)
+# 	fig = make_donut(pos_pie_values,percent_pos,title,fine_print)
 
-	return fig
+# 	return fig
 
 
 def reporting_table(df):
