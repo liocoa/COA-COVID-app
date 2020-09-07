@@ -33,6 +33,9 @@ df = p.calculate(df)
 df_maine = p.maine_relevant_data(df_maine)
 
 
+
+
+
 # Prep figures
 
 table_data = p.reporting_table(df)
@@ -142,7 +145,7 @@ app.layout = html.Div([
     			html.Div(
 					dbc.Jumbotron([
 						html.H2("Recovered cases",style={"textAlign":"center"}),
-						html.H1(str(df[p.recovered].iloc[-1]),style={"textAlign":"center"})
+						html.H1(str(df[p.recovered].sum()),style={"textAlign":"center"})
 					]),
     			),
     		width=4
@@ -178,6 +181,12 @@ app.layout = html.Div([
     			),
     		)
         ]),
+
+        # Fifth row
+
+        dbc.Row([
+        	p.interjection(df)
+        ])
         
 	]),
 

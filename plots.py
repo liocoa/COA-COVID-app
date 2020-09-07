@@ -36,6 +36,7 @@ quar = "Number in quarantine"
 # Calculated
 negative = "Negative results"
 active = "Active cases"
+exp = "Positive explanation"
 
 maine_pop = 1344212
 hancock_pop = 54811
@@ -164,6 +165,7 @@ def donut_quar(df):
 
 
 def reporting_table(df):
+
 	daterange = lambda index : f"{df[start].iloc[index]}–{df[end].iloc[index]}"
 
 	# If there's only one line, just do total since
@@ -176,20 +178,30 @@ def reporting_table(df):
 		posrate = lambda idx : f"{positives[idx]/totals[idx]*100:.1f}%"
 		pos_rates = [posrate(0)]
 
-		data = pd.DataFrame({"":time_labels,"Tests conducted":totals,"Positive results":positives,"Positive rate":pos_rates})
-
-		return data
-
 
 	# If there's two or more lines, we can do the whole shebang
-	
-	time_labels = [f"Current reporting period ({daterange(-1)})",f"Previous reporting period ({daterange(-2)})",f"Total since {df[start].iloc[0]}"]
-	totals = [df[tested].iloc[-1],df[tested].iloc[-2],df[tested].sum()]
-	positives = [df[positive].iloc[-1],df[positive].iloc[-2],df[positive].sum()]
-	
-	posrate = lambda idx : f"{positives[idx]/totals[idx]*100:.1f}%"
-	pos_rates = [posrate(0),posrate(1),posrate(2)]
+	else:
+		time_labels = [f"Current reporting period ({daterange(-1)})",f"Previous reporting period ({daterange(-2)})",f"Total since {df[start].iloc[0]}"]
+		totals = [df[tested].iloc[-1],df[tested].iloc[-2],df[tested].sum()]
+		positives = [df[positive].iloc[-1],df[positive].iloc[-2],df[positive].sum()]
+		
+		posrate = lambda idx : f"{positives[idx]/totals[idx]*100:.1f}%"
+		pos_rates = [posrate(0),posrate(1),posrate(2)]
+
+
+	# Either way, check for an interjection
+	if not pd.isnull(df[exp].iloc[-1]):
+		positives[0] = f"{positives[0]}*"
+
+	# Assemble the df
 
 	data = pd.DataFrame({"":time_labels,"Tests conducted":totals,"Positive results":positives,"Positive rate":pos_rates})
 
 	return data
+
+def interjection(df):
+	# Check for interjection
+	interjection = df[exp].iloc[-1]
+	if not pd.isnull(interjection):
+		return dbc.Col([dbc.Jumbotron([html.P(f"*{interjection}")])])
+
