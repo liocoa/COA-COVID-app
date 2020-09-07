@@ -21,7 +21,7 @@ POP = p.POP
 
 app = dash.Dash(__name__)
 
-df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv')
+df = pd.read_csv('https://tinyurl.com/y2z3ox8p')
 
 df_maine = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vRPtRRaID4XRBSnrzGomnTtUUkq5qsq5zj8fGpg5xse8ytsyFUVqAKKypYybVpsU5cHgIbY3BOiynOC/pub?gid=0&single=true&output=csv')
 
@@ -187,8 +187,8 @@ app.layout = html.Div([
 				dbc.Col(
 					html.Div([
 						html.P("Active cases: the number of COA community members participating in the campus program who have COVID-19"),
-						html.P("Isolations: anyone testing positive for COVID-19 will be placed in isolation until they receive a negative test result or are cleared by the COA COVID health team"),
-						html.P("Quarantines: anyone who shows symptoms or has been in close contact with someone who tests positive for COVID-19 will be asked to quarantine at home until cleared by the COA COVID health team"),
+						html.P("Isolation: anyone testing positive for COVID-19 will be placed in isolation until they receive a negative test result or are cleared by the COA COVID health team"),
+						html.P("Quarantine: anyone who shows symptoms or has been in close contact with someone who tests positive for COVID-19 will be asked to quarantine at home until cleared by the COA COVID health team"),
 						html.P("Overall positive rate: the percentage of all tests done on COA community members that have returned positive results"),
 						html.P(["State and county data: from the Cases by County Table on ",html.A("maine.gov",href='https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml')]),
 						html.P(["COA data: download at ",html.A("TEST LINK DO NOT PUBLISH ME",href='https://tinyurl.com/y2z3ox8p'),])

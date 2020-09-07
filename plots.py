@@ -16,7 +16,7 @@ import dash_table
 
 
 #Campus population
-POP = 480
+POP = 492
 colors = {"COAblue":"#003399",
 			"COAgreen":"#669999",
 			"COVIDred":"#b20c28",
@@ -43,6 +43,25 @@ hancock_pop = 54811
 
 
 def calculate(df):
+
+
+	# Handle empty dataframe
+	if len(df) == 0:
+		new_df = pd.DataFrame({"Timestamp":None,
+								start:None,
+								end:None,
+								tested:0,
+								positive:0,
+								new:0,
+								recovered:0,
+								isol:0,
+								quar:0,
+								negative:0,
+								active:0},
+								index=[0])
+		print(new_df)
+		return new_df
+
 	# Calculate negative cases
 	df[negative]=df[tested]-df[positive]
 
@@ -143,29 +162,27 @@ def donut_total_tests(df):
 
 	return fig
 
-def make_table_df(df):
-	labels = ["Tests conducted:", "Positive results:", "Positivity rate:"]
-	current_vals = [df[tested].iloc[-1],
-	                df[positive].iloc[-1]]
-	previous_vals = [df[tested].iloc[-2],
-	                 df[positive].iloc[-2]]
-	since_vals = [df[tested].sum(),
-	              df[positive].sum()]
-
-	for vals in [current_vals,previous_vals,since_vals]:
-	    pos_rate = (vals[1])/vals[0]*100
-	    vals.append(f"{pos_rate:.1f}%")
-
-	data = pd.DataFrame({"":labels,"This week":current_vals,
-	                   "Last week":previous_vals,f"Since {df[end].iloc[0]}":since_vals})
-
-
-	return data
 
 def reporting_table(df):
-	daterange = lambda index : f"{df[start].iloc[index]} to {df[end].iloc[index]}"
-	
+	daterange = lambda index : f"{df[start].iloc[index]}–{df[end].iloc[index]}"
 
+	# If there's only one line, just do total since
+
+	if len(df) == 1:
+		time_labels = [f"Total since {df[start].iloc[0]}"]
+		totals = [df[tested].sum()]
+		positives = [df[positive].sum()]
+		
+		posrate = lambda idx : f"{positives[idx]/totals[idx]*100:.1f}%"
+		pos_rates = [posrate(0)]
+
+		data = pd.DataFrame({"":time_labels,"Tests conducted":totals,"Positive results":positives,"Positive rate":pos_rates})
+
+		return data
+
+
+	# If there's two or more lines, we can do the whole shebang
+	
 	time_labels = [f"Current reporting period ({daterange(-1)})",f"Previous reporting period ({daterange(-2)})",f"Total since {df[start].iloc[0]}"]
 	totals = [df[tested].iloc[-1],df[tested].iloc[-2],df[tested].sum()]
 	positives = [df[positive].iloc[-1],df[positive].iloc[-2],df[positive].sum()]
