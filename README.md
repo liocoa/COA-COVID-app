@@ -1,5 +1,10 @@
 # COA-COVID-app
 
+DO NOT PUBLISH WITH THE ACTUAL DATA LINK UNTIL THERE'S DATA IN IT.
+The app will break if it doesn't have data to draw from.
+
+
+
 link to actual data: https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv
 
 
