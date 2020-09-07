@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Run this app with `python app.py` and
+# Run this locally with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 
 import dash
@@ -22,14 +22,15 @@ POP = p.POP
 app = dash.Dash(__name__)
 
 
-# Actual data link: https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv
-# Dummy data for testing: https://tinyurl.com/y2z3ox8p
+# Actual data link: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
+# Dummy data for testing: 'https://tinyurl.com/y2z3ox8p'
 
 # Don't publish until there's data in the actual data sheet.
 # The app will break if it doesn't have data to draw from!
 
 
-COA_data_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
+#COA_data_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
+COA_data_url = 'https://tinyurl.com/y2z3ox8p'
 
 df = pd.read_csv(COA_data_url)
 

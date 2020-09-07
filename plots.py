@@ -45,25 +45,6 @@ hancock_pop = 54811
 
 def calculate(df):
 
-
-	# Handle empty dataframe
-	if len(df) == 0:
-		new_df = pd.DataFrame({"Timestamp":None,
-								start:None,
-								end:None,
-								tested:0,
-								positive:0,
-								new:0,
-								recovered:0,
-								isol:0,
-								quar:0,
-								negative:0,
-								active:0,
-								exp:None},
-								index=[0])
-		print(new_df)
-		return new_df
-
 	# Calculate negative cases
 	df[negative]=df[tested]-df[positive]
 
@@ -191,5 +172,5 @@ def interjection(df):
 	# Check for interjection
 	interjection = df[exp].iloc[-1]
 	if not pd.isnull(interjection):
-		return dbc.Col([dbc.Jumbotron([html.P(f"*{interjection}")])])
+		return dbc.Col([dbc.Jumbotron([html.Div([f"*{interjection}"],style={"fontSize":"130%"})])])
 
