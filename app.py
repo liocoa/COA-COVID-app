@@ -11,7 +11,6 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
-import dash_table
 
 import plots as p
 
@@ -22,9 +21,9 @@ POP = p.POP
 
 app = dash.Dash(__name__)
 
-df = pd.read_csv('https://tinyurl.com/y2z3ox8p')
+df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv')
 
-df_maine = pd.read_csv('https://tinyurl.com/y45pf56k')
+df_maine = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vRPtRRaID4XRBSnrzGomnTtUUkq5qsq5zj8fGpg5xse8ytsyFUVqAKKypYybVpsU5cHgIbY3BOiynOC/pub?gid=0&single=true&output=csv')
 
 
 # Perform calculations
