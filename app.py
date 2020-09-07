@@ -109,7 +109,7 @@ app.layout = html.Div([
 
 		dbc.Row([
 			dbc.Col([
-				html.Div([f"Updated on {updated}"],style={"textAlign":"center"})
+				html.Div([f"Updated {updated}"],style={"textAlign":"center"})
 			])
 		]),
 
