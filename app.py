@@ -108,7 +108,8 @@ app.layout = html.Div([
 						html.H1(str(df[p.active].iloc[-1]),style={"textAlign":"center"})
 					]),
     			),
-    		width=6
+    		sm=6
+    		
     		),
 
     		dbc.Col(
@@ -118,7 +119,8 @@ app.layout = html.Div([
 						html.H1(str(df[p.recovered].sum()),style={"textAlign":"center"})
 					]),
     			),
-    		width=6
+    		sm=6
+
     		)
 
 
@@ -144,9 +146,9 @@ app.layout = html.Div([
 
         dbc.Row([
 
-            dbc.Col(dcc.Graph(figure=p.donut_isol(df),config=config),width=6),
+            dbc.Col(p.donut_isol(df),sm=6),
 
-    		dbc.Col(dcc.Graph(figure=p.donut_quar(df),config=config),width=6)
+    		dbc.Col(p.donut_quar(df),sm=6)
 
     		
 
