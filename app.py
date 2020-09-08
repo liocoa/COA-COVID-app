@@ -69,38 +69,6 @@ config = {'staticPlot': True}
 
 
 app.layout = html.Div([
-	# HEADER
-	html.Header([
-		dbc.Container([
-
-			html.Br(),
-
-			dbc.Row([
-
-				# COA logo
-				dbc.Col(
-					html.Img(
-						id="COA-seal",
-						src=app.get_asset_url('coa_seal_transparency.png'),
-						style={
-							"height":"75px",
-							"width":"auto"
-						}
-					),
-					width=1
-				),
-				# A title
-				dbc.Col(html.H1("COA COVID-19 Dashboard"))
-			]),
-
-			html.Br()
-
-		])
-	],
-	style={"backgroundColor":colors["COAgreen"]}
-	),
-
-	# End header
 
 	# The main layout
 	dbc.Container([
