@@ -21,7 +21,8 @@ colors = {"COAblue":"#003399",
 			"COAgreen":"#669999",
 			"COVIDred":"#b20c28",
 			"COAyellow":"#9e711c",
-			"COAbrown": "#824b15"}
+			"COAbrown": "#824b15",
+			"paperColor": "#ecf0f1"}
 
 # Column names
 # Included in data entry
@@ -80,13 +81,13 @@ def timeseries(df):
 	# Fonts
 	fig.update_layout(font_family="Trebuchet MS",font_size=18)
 	# Plot background
-	fig.update_layout(plot_bgcolor="#ecf0f1")
+	fig.update_layout(plot_bgcolor=colors["paperColor"])
 	return fig
 
 
 def make_donut(values,hole_number,title,fine_print):
 
-	donut_margins = dict(l=10, r=10, t=0, b=0)
+	donut_margins = dict(l=20, r=20, t=0, b=0)
 
 	fig = go.Figure(data=[go.Pie(values=values, hole=0.5)])
 
@@ -97,6 +98,8 @@ def make_donut(values,hole_number,title,fine_print):
 	fig.update_traces(textinfo="none",hoverinfo='none')
 	# Colors
 	fig.update_traces(marker=dict(colors=[colors["COAblue"],colors["COAgreen"]]))
+	# Plot background
+	fig.update_layout(paper_bgcolor=colors["paperColor"])
 	# Center data
 	fig.add_annotation(text=f"{hole_number:.1f}%", x=0.5, y=0.5, font_size=30, showarrow=False)
 	# Fine print
@@ -106,11 +109,16 @@ def make_donut(values,hole_number,title,fine_print):
 	# Fonts
 	fig.update_layout(font_family="Trebuchet MS",font_size=18)
 
-	content = [
+	content = html.Div([
+		html.Br(),
 		html.H4(title,style={"textAlign":"center"}),
 		html.H4(fine_print,style={"textAlign":"center"}),
-		dcc.Graph(figure=fig,config=config)
-		]
+		dcc.Graph(figure=fig,config=config),
+		html.Br()
+		],
+		style={"backgroundColor":colors["paperColor"],
+				"borderRadius":"5px"}
+		)
 
 	return content
 
