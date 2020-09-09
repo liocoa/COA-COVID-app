@@ -3,6 +3,8 @@
 # Run this locally with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 
+import os # for heroku
+
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -20,6 +22,8 @@ POP = p.POP
 
 
 app = dash.Dash(__name__)
+
+server = app.server
 
 
 # Actual data link: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
