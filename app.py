@@ -3,7 +3,11 @@
 # Run this locally with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 
+<<<<<<< HEAD
 import os
+=======
+import os # for heroku
+>>>>>>> master
 
 import dash
 import dash_core_components as dcc
