@@ -3,7 +3,11 @@
 # Run this locally with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 
+<<<<<<< HEAD
+import os
+=======
 import os # for heroku
+>>>>>>> master
 
 import dash
 import dash_core_components as dcc
@@ -73,43 +77,11 @@ config = {'staticPlot': True}
 
 
 app.layout = html.Div([
-	# HEADER
-	html.Header([
-		dbc.Container([
-
-			html.Br(),
-
-			dbc.Row([
-
-				# COA logo
-				dbc.Col(
-					html.Img(
-						id="COA-seal",
-						src=app.get_asset_url('coa_seal_transparency.png'),
-						style={
-							"height":"75px",
-							"width":"auto"
-						}
-					),
-					width=1
-				),
-				# A title
-				dbc.Col(html.H1("COA COVID-19 Dashboard"))
-			]),
-
-			html.Br()
-
-		])
-	],
-	style={"backgroundColor":colors["COAgreen"]}
-	),
-
-	# End header
 
 	# The main layout
 	dbc.Container([
 
-		# Updated note
+		# Updated date
 
 		dbc.Row([
 			dbc.Col([
@@ -119,7 +91,7 @@ app.layout = html.Div([
 
 		html.Br(),
 		
-		# First row
+		# First row: the table
 
 		dbc.Row([
     		
@@ -133,18 +105,9 @@ app.layout = html.Div([
 
 		html.Br(),
 
-		# Second row
+		# Second row: active and recovered numbers
 
         dbc.Row([
-
-    		dbc.Col(
-    			dcc.Graph(
-    				id="timeseries-graph",
-    				figure=cases_timeseries,
-    				config=config
-    			),
-    		width=8
-			),
 
 			dbc.Col(
     			html.Div(
@@ -153,22 +116,9 @@ app.layout = html.Div([
 						html.H1(str(df[p.active].iloc[-1]),style={"textAlign":"center"})
 					]),
     			),
-    		width=4
-    		)
-
-
-        ]),
-
-
-        html.Br(),
-
-        # Third row
-
-        dbc.Row([
-
-            dbc.Col(dcc.Graph(figure=p.donut_isol(df),config=config),width=4),
-
-    		dbc.Col(dcc.Graph(figure=p.donut_quar(df),config=config),width=4),
+    		sm=6
+    		
+    		),
 
     		dbc.Col(
     			html.Div(
@@ -177,15 +127,46 @@ app.layout = html.Div([
 						html.H1(str(df[p.recovered].sum()),style={"textAlign":"center"})
 					]),
     			),
-    		width=4
+    		sm=6
+
     		)
 
 
         ]),
 
 
+        html.Br(),
 
-        # Fourth row
+        # Third row: timeseries
+
+        dbc.Row([
+        	dbc.Col(
+    			dcc.Graph(
+    				id="timeseries-graph",
+    				figure=cases_timeseries,
+    				config=config
+    			),
+    		width=12
+			)
+        ]),
+
+        # Fourth row: donuts
+
+        dbc.Row([
+
+            dbc.Col(p.donut_isol(df),sm=6),
+
+    		dbc.Col(p.donut_quar(df),sm=6)
+
+    		
+
+
+        ]),
+
+
+        html.Br(),
+
+        # Fifth row: county and state numbers
 
         dbc.Row([
         	dbc.Col(
@@ -211,13 +192,18 @@ app.layout = html.Div([
     		)
         ]),
 
-        # Fifth row
+        # Optional sixth row: interjection
 
         dbc.Row([
         	p.interjection(df)
         ])
         
-	]),
+	],
+	# main layout container kwargs
+	fluid=True
+
+
+	),
 
 	# End main layout.
 
@@ -245,7 +231,9 @@ app.layout = html.Div([
 
 			html.Br()
 
-		])
+		],
+		fluid=True
+		)
 	],
 	style={"backgroundColor":colors["COAgreen"]}
 	)

@@ -41,6 +41,8 @@ exp = "Positive explanation"
 maine_pop = 1344212
 hancock_pop = 54811
 
+# pass to graph objects to make them static
+config = {'staticPlot': True}
 
 
 def calculate(df):
@@ -84,14 +86,13 @@ def timeseries(df):
 
 def make_donut(values,hole_number,title,fine_print):
 
-	donut_margins = dict(l=30, r=30, t=40, b=0)
-
-
+	donut_margins = dict(l=10, r=10, t=0, b=0)
 
 	fig = go.Figure(data=[go.Pie(values=values, hole=0.5)])
 
 	# Title, suppress legend
-	fig.update_layout(title={"text":title,"x":0.5,"xanchor":"center"}, showlegend=False)
+	#fig.update_layout(title={"text":title,"x":0.5,"xanchor":"center"})
+	fig.update_layout(showlegend=False)
 	# Trace labels and hover info
 	fig.update_traces(textinfo="none",hoverinfo='none')
 	# Colors
@@ -99,13 +100,19 @@ def make_donut(values,hole_number,title,fine_print):
 	# Center data
 	fig.add_annotation(text=f"{hole_number:.1f}%", x=0.5, y=0.5, font_size=30, showarrow=False)
 	# Fine print
-	fig.add_annotation(text=fine_print, x=0.5, y=1, showarrow=False)
+	# fig.add_annotation(text=fine_print, x=0.5, y=1, showarrow=False)
 	# Margins
 	fig.update_layout(margin=donut_margins)
 	# Fonts
 	fig.update_layout(font_family="Trebuchet MS",font_size=18)
 
-	return fig
+	content = [
+		html.H4(title,style={"textAlign":"center"}),
+		html.H4(fine_print,style={"textAlign":"center"}),
+		dcc.Graph(figure=fig,config=config)
+		]
+
+	return content
 
 def donut_isol(df):
 	current_isol_val = df[isol].iloc[-1]
@@ -115,9 +122,8 @@ def donut_isol(df):
 	title = "Current Isolation"
 	fine_print = str(current_isol_val)
 
-	fig = make_donut(isol_pie_values,percent_isol,title,fine_print)
+	return make_donut(isol_pie_values,percent_isol,title,fine_print)
 
-	return fig
 
 def donut_quar(df):
 	current_quar_val = df[quar].iloc[-1]
@@ -128,9 +134,9 @@ def donut_quar(df):
 	fine_print = str(current_quar_val)
 
 
-	fig = make_donut(quar_pie_values,percent_quar,title,fine_print)    
+	return make_donut(quar_pie_values,percent_quar,title,fine_print)    
 
-	return fig
+
 
 
 def reporting_table(df):
