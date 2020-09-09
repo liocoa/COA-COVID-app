@@ -128,7 +128,7 @@ app.layout = html.Div([
         ]),
 
 
-        html.Br(),
+
 
         # Third row: timeseries
 

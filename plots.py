@@ -88,7 +88,18 @@ def timeseries(df):
 	fig.update_layout(font_family="Trebuchet MS",font_size=18)
 	# Plot background
 	fig.update_layout(plot_bgcolor=colors["paperColor"])
-	return fig
+	
+	content = html.Div([
+		dcc.Graph(
+			id="timeseries-graph",
+			figure=fig,
+			config=config),
+		html.Br()
+		])
+
+
+
+	return content
 
 
 def make_donut(values,hole_number,title,fine_print):
