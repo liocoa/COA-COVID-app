@@ -72,6 +72,12 @@ def maine_relevant_data(df):
 
 
 def timeseries(df):
+
+	# Don't bother with the chart if we haven't had a single active case
+	if df[active].sum() == 0:
+		return None
+
+
 	fig = px.line(df,x=end,y=active,range_y=(0,1.25*df[active].max()),title="Active cases over time",labels={end:""})
 	fig.update_layout(title={"text":"Active cases over time","x":0.5,"xanchor":"center"}, showlegend=False)
 	# Margins

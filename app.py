@@ -37,8 +37,8 @@ server = app.server
 # The app will break if it doesn't have data to draw from!
 
 
-#COA_data_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
-COA_data_url = 'https://tinyurl.com/y2z3ox8p'
+COA_data_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
+#COA_data_url = 'https://tinyurl.com/y2z3ox8p'
 
 df = pd.read_csv(COA_data_url)
 
@@ -53,13 +53,6 @@ df_maine = p.maine_relevant_data(df_maine)
 
 
 
-
-
-# Prep figures
-
-table_data = p.reporting_table(df)
-cases_timeseries = p.timeseries(df)
-#test_rect = p.donut_total_tests(df)
 
 # Get colors from plots file
 colors = p.colors
@@ -97,7 +90,7 @@ app.layout = html.Div([
     		
     		dbc.Col([
             	html.Div([
-            		dbc.Table.from_dataframe(table_data, striped=True, bordered=True, hover=False)
+            		dbc.Table.from_dataframe(p.reporting_table(df), striped=True, bordered=True, hover=False)
             	])
             ])
         	
@@ -140,12 +133,9 @@ app.layout = html.Div([
         # Third row: timeseries
 
         dbc.Row([
-        	dbc.Col(
-    			dcc.Graph(
-    				id="timeseries-graph",
-    				figure=cases_timeseries,
-    				config=config
-    			),
+        	dbc.Col([
+    			p.timeseries(df)
+    		],
     		width=12
 			)
         ]),
