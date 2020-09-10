@@ -70,6 +70,10 @@ config = {'staticPlot': True}
 
 
 app.layout = html.Div([
+	# Header
+	html.Header(html.Div(),style={"backgroundColor":colors["COAgreen"],"height":"50px"}),
+
+
 
 	# The main layout
 	dbc.Container([

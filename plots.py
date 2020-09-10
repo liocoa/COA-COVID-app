@@ -189,9 +189,11 @@ def reporting_table(df):
 		pos_rates = [posrate(0),posrate(1),posrate(2)]
 
 
-	# Either way, check for an interjection
+	# Either way, check for an interjection on either the current or previous reporting period
 	if not pd.isnull(df[exp].iloc[-1]):
 		positives[0] = f"{positives[0]}*"
+	elif not pd.isnull(df[exp].iloc[-2]):
+		positives[1] = f"{positives[1]}*"
 
 	# Assemble the df
 
@@ -201,7 +203,8 @@ def reporting_table(df):
 
 def interjection(df):
 	# Check for interjection
-	interjection = df[exp].iloc[-1]
-	if not pd.isnull(interjection):
-		return dbc.Col([dbc.Jumbotron([html.Div([f"*{interjection}"],style={"fontSize":"130%"})])])
+	for n in [-1,-2]:
+		interjection = df[exp].iloc[n]
+		if not pd.isnull(interjection):
+			return dbc.Col([dbc.Jumbotron([html.Div([f"*{interjection}"],style={"fontSize":"130%"})])])
 
