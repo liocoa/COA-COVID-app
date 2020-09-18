@@ -30,15 +30,14 @@ app = dash.Dash(__name__)
 server = app.server
 
 
-# Actual data link (old): 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
-# Actual data link (new): "https://docs.google.com/spreadsheets/d/e/2PACX-1vSncnMccl7ut47zMprsHK7lX65OhNLoqsHUkRem5tV_T8hyEOkqXF0B5LW6ggUJIoY-Jh1AysT3fNIa/pub?gid=0&single=true&output=csv"
+# Actual data link: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
 # Dummy data for testing: 'https://tinyurl.com/y2z3ox8p'
 
 # Don't publish until there's data in the actual data sheet.
 # The app will break if it doesn't have data to draw from!
 
 
-COA_data_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSncnMccl7ut47zMprsHK7lX65OhNLoqsHUkRem5tV_T8hyEOkqXF0B5LW6ggUJIoY-Jh1AysT3fNIa/pub?gid=0&single=true&output=csv"
+COA_data_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
 #COA_data_url = 'https://tinyurl.com/y2z3ox8p'
 
 df = pd.read_csv(COA_data_url)
