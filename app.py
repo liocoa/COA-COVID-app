@@ -42,7 +42,7 @@ COA_data_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-
 
 df = pd.read_csv(COA_data_url)
 
-df_maine = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vRPtRRaID4XRBSnrzGomnTtUUkq5qsq5zj8fGpg5xse8ytsyFUVqAKKypYybVpsU5cHgIbY3BOiynOC/pub?gid=0&single=true&output=csv')
+df_maine = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSncnMccl7ut47zMprsHK7lX65OhNLoqsHUkRem5tV_T8hyEOkqXF0B5LW6ggUJIoY-Jh1AysT3fNIa/pub?gid=0&single=true&output=csv')
 
 
 # Perform calculations
