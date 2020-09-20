@@ -181,7 +181,7 @@ def reporting_table(df):
 
 	# If there's two or more lines, we can do the whole shebang
 	else:
-		time_labels = [f"Current reporting period ({daterange(-1)})",f"Previous reporting period ({daterange(-2)})",f"Total since {df[start].iloc[0]}"]
+		time_labels = [f"Current reporting period ({daterange(-1)})",f"Previous reporting period ({daterange(-2)})",f"Total since 8/22/2020"]
 		totals = [df[tested].iloc[-1],df[tested].iloc[-2],df[tested].sum()]
 		positives = [df[positive].iloc[-1],df[positive].iloc[-2],df[positive].sum()]
 		
