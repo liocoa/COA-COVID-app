@@ -35,11 +35,12 @@ server = app.server
 
 # Access COA data directly through Google Drive API
 import io
+import os
 
 from google.oauth2 import service_account
 
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
-SERVICE_ACCOUNT_FILE = 'api_key.json'
+SERVICE_ACCOUNT_FILE = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
 credentials = service_account.Credentials.from_service_account_file(
         SERVICE_ACCOUNT_FILE, scopes=SCOPES)
