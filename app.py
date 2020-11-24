@@ -30,17 +30,32 @@ app = dash.Dash(__name__)
 server = app.server
 
 
-# Actual data link: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
-# Dummy data for testing: 'https://tinyurl.com/y2z3ox8p'
 
-# Don't publish until there's data in the actual data sheet.
-# The app will break if it doesn't have data to draw from!
+############################################################################
 
+# Access COA data directly through Google Drive API
+import io
 
-COA_data_url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv'
-#COA_data_url = 'https://tinyurl.com/y2z3ox8p'
+from google.oauth2 import service_account
 
-df = pd.read_csv(COA_data_url)
+SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
+SERVICE_ACCOUNT_FILE = 'api_key.json'
+
+credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+
+import googleapiclient.discovery
+from googleapiclient.http import MediaIoBaseDownload
+
+drive_service = googleapiclient.discovery.build('drive', 'v3', credentials=credentials)
+
+file_id = '1lFYO6N31Vy1P52HS-1ttu1sJig65Wwdtnbgcmy7RRwI'
+request = drive_service.files().export_media(fileId=file_id,
+                                             mimeType='text/csv').execute()
+
+df = pd.read_csv(io.BytesIO(request))
+
+##################################################################
 
 df_maine = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSncnMccl7ut47zMprsHK7lX65OhNLoqsHUkRem5tV_T8hyEOkqXF0B5LW6ggUJIoY-Jh1AysT3fNIa/pub?gid=0&single=true&output=csv')
 
@@ -218,7 +233,7 @@ app.layout = html.Div([
 						html.P("Quarantine: anyone who has been in close contact with someone who tests positive for COVID-19 will be required to quarantine until cleared by the COA COVID-19 health team"),
 						# html.P("Overall positive rate: the percentage of all tests done on COA community members that have returned positive results"),
 						html.P(["State and county data: from the Cases by County Table on ",html.A("maine.gov",href='https://www.maine.gov/dhhs/mecdc/infectious-disease/epi/airborne/coronavirus/data.shtml')]),
-						html.P(["COA data: ",html.A("download here",href=COA_data_url),])
+						# html.P(["COA data: ",html.A("download here",href=COA_data_url),])
 					])
 				)
 			]),
