@@ -8,7 +8,7 @@ Lio's COA email owns the service account, and Dan is also an authorized admin fo
 
 Because of OAuth, this app can no longer run locally by anyone without the API key. To run it locally, obtain the API key from Lio or Heroku and store it in the same directory as app.py. Start a virtualenv (make sure to install all dependencies in requirements.txt) and set an environment variable `GOOGLE_APPLICATION_CREDENTIALS` by writing `export GOOGLE_APPLICATION_CREDENTIALS="<api_key_file>.json"` at the end of the /bin/activate file, and `unset GOOGLE_APPLICATION_CREDENTIALS` at the end of the `deactivate()` method. Then you should be able to run the app locally by running `python app.py` in the command line and visiting http://127.0.0.1:8050/ in your browser.
 
-Maine and Hancock county data are sourced from the Maine CDC at this link:https://docs.google.com/spreadsheets/d/e/2PACX-1vRPtRRaID4XRBSnrzGomnTtUUkq5qsq5zj8fGpg5xse8ytsyFUVqAKKypYybVpsU5cHgIbY3BOiynOC/pub?gid=0&single=true&output=csv
+Maine and Hancock county data are sourced from the Maine CDC at this link: https://docs.google.com/spreadsheets/d/e/2PACX-1vRPtRRaID4XRBSnrzGomnTtUUkq5qsq5zj8fGpg5xse8ytsyFUVqAKKypYybVpsU5cHgIbY3BOiynOC/pub?gid=0&single=true&output=csv
 
 For questions, contact Lio (or Dan, who will probably contact Lio).
 
