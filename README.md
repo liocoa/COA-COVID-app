@@ -1,23 +1,14 @@
 # COA-COVID-app
 
-DO NOT PUBLISH WITH THE ACTUAL DATA LINK UNTIL THERE'S DATA IN IT.
-The app will break if it doesn't have data to draw from.
+This repository is a dash app showing the COVID reporting data and history for College of the Atlantic. The app is deployed at coa-covid.heroku.com from a local repo on Lio's laptop, but can be deployed from a different computer by anyone with admin privileges on the Heroku app.
 
+The app gets its COA data from a Google Sheet owned by Dan, which is shared with Lio and the app's Google service account. The sheet is populated by responses from a Google Form, also editable by Lio and Dan. Deb should be the only one to fill out the form. The form collects email addresses, so one can visually check the sheet to ensure that Deb really is the only one filling in data.
 
+Lio's COA email owns the service account, and Dan is also an authorized admin for it. The account is validated using OAuth 2.0. The Drive API key is stored securely as an environment variable in Heroku. The app accesses the key on its own.
 
-link to actual data: https://docs.google.com/spreadsheets/d/e/2PACX-1vS5WH3RNN_pzZVH-emkww1ZaOP-3SfZfTYTjFjTuhLMm4v6rVWKIxCdT5lhnLZbqkr3ZyIvqa4j6dsi/pub?gid=74385221&single=true&output=csv
+Because of OAuth, this app can no longer run locally by anyone without the API key. To run it locally, obtain the API key from Lio or Heroku and store it in the same directory as app.py. Start a virtualenv (make sure to install all dependencies in requirements.txt) and set an environment variable `GOOGLE_APPLICATION_CREDENTIALS` by writing `export GOOGLE_APPLICATION_CREDENTIALS="<api_key_file>.json"` at the end of the /bin/activate file, and `unset GOOGLE_APPLICATION_CREDENTIALS` at the end of the `deactivate()` method. Then you should be able to run the app locally by running `python app.py` in the command line and visiting http://127.0.0.1:8050/ in your browser.
 
+Maine and Hancock county data are sourced from the Maine CDC at this link:https://docs.google.com/spreadsheets/d/e/2PACX-1vRPtRRaID4XRBSnrzGomnTtUUkq5qsq5zj8fGpg5xse8ytsyFUVqAKKypYybVpsU5cHgIbY3BOiynOC/pub?gid=0&single=true&output=csv
 
+For questions, contact Lio (or Dan, who will probably contact Lio).
 
-
-
-link to dummy data entry form: https://forms.gle/PkcKmq7VjfjSNDAeA
-
-link to dummyData3: https://docs.google.com/spreadsheets/d/e/2PACX-1vTTETh0kr3XvwBP5YxSGdG59b8HfpBK7DxMH3uU0G7V2Lnco7GV2C9P_MxY7z7AjmD6mknVP39ZzZFM/pub?gid=345991795&single=true&output=csv
-
-or https://tinyurl.com/y2z3ox8p
-
-
-link to Maine reporting by county: https://docs.google.com/spreadsheets/d/e/2PACX-1vRPtRRaID4XRBSnrzGomnTtUUkq5qsq5zj8fGpg5xse8ytsyFUVqAKKypYybVpsU5cHgIbY3BOiynOC/pub?gid=0&single=true&output=csv
-
-or https://tinyurl.com/y45pf56k
