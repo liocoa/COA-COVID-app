@@ -58,7 +58,12 @@ df = pd.read_csv(io.BytesIO(request))
 
 ##################################################################
 
-df_maine = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSncnMccl7ut47zMprsHK7lX65OhNLoqsHUkRem5tV_T8hyEOkqXF0B5LW6ggUJIoY-Jh1AysT3fNIa/pub?gid=0&single=true&output=csv')
+
+
+df_maine = "argh"
+
+
+
 
 
 # Perform calculations
