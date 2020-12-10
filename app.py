@@ -58,9 +58,14 @@ df = pd.read_csv(io.BytesIO(request))
 
 ##################################################################
 
+import urllib
+
+dls = "https://gateway.maine.gov/dhhs-apps/mecdc_covid/Maine_COVID19_Summary.xlsx"
+urllib.request.urlretrieve(dls, "maine_data.xlsx")  # For Python 3
 
 
-df_maine = "argh"
+
+df_maine = pd.read_excel("maine_data.xlsx")
 
 
 
