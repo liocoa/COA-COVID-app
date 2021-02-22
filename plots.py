@@ -63,12 +63,18 @@ def calculate(df):
 	return df
 
 def maine_relevant_data(df):
-	totals = {"PATIENT_COUNTY":"Total","CASES":df["CASES"].sum(),"RECOVERIES":df["RECOVERIES"].sum()}
-	hancock = df[df["PATIENT_COUNTY"]=="Hancock"]
-	df1 = hancock.append(totals,ignore_index=True)
-	df1["POP"] = [hancock_pop,maine_pop]
-	df1["PERCAP"] = df1["CASES"]/df1["POP"]*10000
-	return df1
+	# Hancock county is the 14th line
+	hancock_cases = df['cases'][13]
+	total_cases = df["cases"].sum()
+
+	data = {"PATIENT_COUNTY":["Hancock","Total"],
+			"CASES":[hancock_cases,total_cases],
+			"POP":[hancock_pop,maine_pop],
+			"PERCAP":[hancock_cases/hancock_pop*10000,total_cases/maine_pop*10000]}
+
+	df2 = pd.DataFrame(data)
+
+	return df2
 
 
 def timeseries(df):
